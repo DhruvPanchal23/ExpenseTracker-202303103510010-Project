@@ -87,3 +87,6 @@ The project consists of a backend API and a frontend HTML file. Both must be run
 1.  Navigate to the `frontend` sub-directory.
 2.  Open the **`index.html`** file directly in any modern web browser (e.g., Chrome, Firefox, Edge).
 3.  The webpage will load, and you can now add and view expenses. The form will send requests to the backend API you started in the previous step.
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fe7670af-72e2-490e-b353-ffbdc00a5eec" />
+
