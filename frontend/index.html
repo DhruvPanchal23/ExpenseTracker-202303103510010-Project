@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+</head>
+<body>
+  <h1>Expense Tracker</h1>
+  <form id="expenseForm">
+    <input type="text" id="title" placeholder="Title" required>
+    <input type="number" id="amount" placeholder="Amount" required>
+    <input type="text" id="category" placeholder="Category" required>
+    <button type="submit">Add Expense</button>
+  </form>
+
+  <ul id="list"></ul>
+
+  <script>
+    const api = "http://localhost:5000/api/expenses";
+
+    async function loadExpenses() {
+      const res = await fetch(api);
+      const data = await res.json();
+      document.getElementById("list").innerHTML =
+        data.map(e => `<li>${e.title} - ₹${e.amount} (${e.category})</li>`).join("");
+    }
+
+    document.getElementById("expenseForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const expense = {
+        title: document.getElementById("title").value,
+        amount: parseFloat(document.getElementById("amount").value),
+        category: document.getElementById("category").value
+      };
+      await fetch(api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(expense)
+      });
+      loadExpenses();
+      e.target.reset();
+    });
+
+    loadExpenses();
+  </script>
+</body>
+</html>
