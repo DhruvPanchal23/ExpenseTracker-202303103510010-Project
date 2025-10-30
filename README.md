@@ -2,16 +2,56 @@
 
 ## Description
 
-This project is a simple expense tracking application. It features a backend API built with .NET 9 and ASP.NET Core, which handles the business logic and data storage. The API uses Entity Framework Core with a **SQLite** database (`expenses.db`) to store expense records.
+This project is a simple, full-stack expense tracking application. It consists of a .NET Web API backend and a simple HTML/JavaScript frontend.
 
-The API provides endpoints for:
-* **GET** `/api/expenses`:Retrieves a list of all expenses.
-* **POST** `/api/expenses`: Adds a new expense to the database.
-* **DELETE** `/api/expenses/{id}`: Deletes a specific expense by its ID.
+The backend is built with **.NET 9** and **ASP.NET Core**, providing a RESTful API for managing expense records. It uses **Entity Framework Core 9** to interact with a **SQLite** database, making it lightweight and self-contained. The API is documented using **Swagger (Swashbuckle)**, which is available in the development environment.
 
-A basic **HTML and JavaScript frontend** is included, allowing users to add new expenses (title, amount, category) and view a list of all current expenses. The frontend communicates with the backend API running on `http://localhost:5000`.
+The frontend is a single `index.html` file that uses vanilla **JavaScript** and the `fetch` API to communicate with the backend. It allows users to add new expenses (title, amount, category) and view a list of all current expenses.
 
-The project also includes **Swagger** for API documentation and testing, which is available when the project is run in a development environment.
+---
+
+## Tech Stack
+
+### Backend
+* **.NET 9**
+* **ASP.NET Core Web API**
+* **Entity Framework Core 9**
+* **SQLite** (for data storage)
+* **Swashbuckle (Swagger)** (for API documentation)
+
+### Frontend
+* **HTML5**
+* **Vanilla JavaScript** (ES6+ async/await)
+
+---
+
+## Project Details
+
+### API Endpoints
+The backend API is managed by the `ExpensesController` and provides the following endpoints:
+
+* `[HttpGet] /api/expenses`
+    * **Description:** Retrieves a list of all expenses from the database.
+    * **Response:** `200 OK` with a JSON array of expense objects.
+   
+
+* `[HttpPost] /api/expenses`
+    * **Description:** Adds a new expense to the database.
+    * **Request Body:** A JSON object representing the expense (e.g., `{"title": "Coffee", "amount": 5.00, "category": "Food"}`).
+    * **Response:** `200 OK` with the newly created expense object.
+   
+
+* `[HttpDelete] /api/expenses/{id}`
+    * **Description:** Deletes a specific expense by its unique ID.
+    * **Response:** `204 NoContent` if successful, or `404 NotFound` if the expense with the given ID does not exist.
+   
+
+### Frontend Functionality
+The `frontend/index.html` file provides the user interface:
+
+* **View Expenses:** On page load, an `async` function `loadExpenses()` is called, which fetches all expenses from the `GET /api/expenses` endpoint and displays them in an unordered list.
+* **Add Expense:** A form (`#expenseForm`) captures the title, amount, and category for a new expense. On submission, it sends this data to the `POST /api/expenses` endpoint using a `fetch` request.
+* **Auto-Refresh:** After a new expense is successfully submitted, the `loadExpenses()` function is called again to refresh the list, and the form is reset.
 
 ---
 
@@ -24,6 +64,7 @@ The project also includes **Swagger** for API documentation and testing, which i
     ```bash
     dotnet restore
     ```
+5.  The project is configured to use Entity Framework Core. The database (`expenses.db`) will be created automatically in the root folder when the application is first run, based on the `AppDbContext` configuration.
 
 ---
 
